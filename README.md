@@ -66,7 +66,7 @@ quandl.dataset({ source: "BITCOIN", table: "MTGOXUSD" }, function(err, data){
 ```
 Fetch dataset metadata, and print response:
 ```javascript
-quandl.metadata("ZILLOW", "ZIP_ALLHOMES_15235", function(err, data){
+quandl.metadata({ source: "ZILLOW", table: "ZIP_ALLHOMES_15235" }, function(err, data){
     if(err)
         throw err;
 
@@ -87,7 +87,7 @@ Response status, headers, etc. can be obtained by specifying a third parameter i
 quandl.dataset({ source: "BITCOIN", table: "MTGOXUSD" }, function(err, data, response){
     if(err)
         throw err;
-    
+
     if (response.statusCode === 200){
         console.log(data);
     } else {
@@ -137,18 +137,19 @@ var promise = quandl.dataset({ source: "WIKI", table: "FB" });
 promise.then(function(responseArray){
     var data = responseArray[0], response = responseArray[1];
     // Non-2xx responses will not reject the promise by default, they must be handled manually:
-    if (response.statusCode !== 200) throw responseArray;
+    if (response.statusCode !== 200)
+        throw responseArray;
     console.log(data);
 }).catch(function(err){
     console.error(err);
 });
 
 // Node 6+ can use this syntax:
-promise.then(([data, response] => {
+promise.then(([data, response]) => {
     // ...
 });
 ```
-This also allows the methods to be compatible with [`co`](https://github.com/tj/co) as well as the upcoming "async/await" feature/syntax being introduced into JavaScript.
+This also allows the methods to be compatible with [`co`](https://github.com/tj/co) as well as the upcoming "async/await" syntax when it is introduced into Node.
 
 ###Running Tests
 ```npm test```
