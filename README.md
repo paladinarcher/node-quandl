@@ -129,5 +129,26 @@ You can customize the dataset object by adding extra parameters. For more inform
 
 If you don't want to hard code the start and/or end dates, use [Moment](http://momentjs.com/) to capture and manipulate the current date and time.
 
+###Promise interface
+All methods can return a promise (Node 0.12 or above) if the callback function is omitted from the arguments. Any success handler will receive an **array** in the format `[data, response]`.
+```javascript
+var promise = quandl.dataset({ source: "WIKI", table: "FB" });
+
+promise.then(function(responseArray){
+    var data = responseArray[0], response = responseArray[1];
+    // Non-2xx responses will not reject the promise by default, they must be handled manually:
+    if (response.statusCode !== 200) throw responseArray;
+    console.log(data);
+}).catch(function(err){
+    console.error(err);
+});
+
+// Node 6+ can use this syntax:
+promise.then(([data, response] => {
+    // ...
+});
+```
+This also allows the methods to be compatible with [`co`](https://github.com/tj/co) as well as the upcoming "async/await" feature/syntax being introduced into JavaScript.
+
 ###Running Tests
 ```npm test```
