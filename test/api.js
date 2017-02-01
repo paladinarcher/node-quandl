@@ -24,6 +24,18 @@ describe("api", function(){
 
         });
 
+        describe("#datatables()", function() {
+            it("returns a promise if callback is omitted", function() {
+                assert(quandl.datatables({}) instanceof Promise);
+            });
+
+            it("returns undefined if callback is provided", function() {
+                assert.equal(quandl.datatables({}, function(){}), undefined);
+                assert.equal(quandl.datatables({}, {}, function(){}), undefined);
+            });
+
+        });
+
         describe("#metadata()", function() {
             it("returns a promise if callback is omitted", function() {
                 assert(quandl.metadata({}) instanceof Promise);
