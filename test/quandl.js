@@ -14,10 +14,12 @@ describe("quandl", function(){
             var required_keys = [
                 "configure",
                 "dataset",
+                "datatables",
                 "metadata",
                 "multiset",
                 "favorites",
-                "search"
+                "search",
+                "delta"
             ]
 
             assert.deepEqual(_.keys(quandl.__proto__), required_keys);
